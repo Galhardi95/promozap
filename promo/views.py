@@ -2,7 +2,6 @@ from django.shortcuts import redirect
 from django.http import HttpResponse
 from .models import AcessoPromo
 from django.db import connection
-from tkinter import messagebox
 
 
 LIMITE = 1
