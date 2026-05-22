@@ -1,13 +1,14 @@
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from .models import AcessoPromo
+from django.db import connection
+from tkinter import messagebox
+
 
 LIMITE = 1
-TEXT = 'Ola, acessei o link e sou um dos ganhadores da promocao!!'
 
+#PROMOÇAO VALIDA PARA 5 PESSOAS
 def pagina_promo(request):
-
-    ip = request.META.get('REMOTE_ADDR')
 
     total = AcessoPromo.objects.count()
 
@@ -17,18 +18,33 @@ def pagina_promo(request):
             <p>Os acessos promocionais já foram utilizados.</p>
         """)
 
-    ja_existe = AcessoPromo.objects.filter(ip=ip).exists()
+    AcessoPromo.objects.create(ip="usuario")
 
-    if not ja_existe:
-        AcessoPromo.objects.create(ip=ip)
+    whatsapp = "https://wa.me/5516974002001?text=Ol%C3%A1%20vim%20pela%20promo%C3%A7%C3%A3o"
 
-    whatsapp = "https://wa.me/5516996268400?text=Ol%C3%A1%20vim%20pela%20promo%C3%A7%C3%A3o"
+    return HttpResponse(f"""
+    <h2>Parabéns! Você conseguiu acessar</h2><br>
+    <p>Clique no botao para garantir a promoção</p>
 
-    return redirect(whatsapp)
+    <a href="{whatsapp}" target="_blank">
+        <button style="
+            padding: 15px;
+            font-size: 20px;
+            cursor: pointer;
+        ">
+            Garanta seu Desconto
+        </button>
+    </a>
+""")
+    # return HttpResponse("""
+    #     <h2>Parabens voce conseguiu acessar a PROMOÇAO !!</h2>
+    # """)
+
 
 
 def resetar(request):
 
     AcessoPromo.objects.all().delete()
+    # connection.close()
 
     return HttpResponse("Acessos resetados!")
