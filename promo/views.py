@@ -25,3 +25,10 @@ def pagina_promo(request):
     whatsapp = "https://wa.me/5516996268400?text=Ol%C3%A1%20vim%20pela%20promo%C3%A7%C3%A3o"
 
     return redirect(whatsapp)
+
+
+def resetar(request):
+
+    AcessoPromo.objects.all().delete()
+
+    return HttpResponse("Acessos resetados!")
