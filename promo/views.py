@@ -19,7 +19,6 @@ def pagina_promo(request):
          return HttpResponse("""
                 <!DOCTYPE html>
                 <html lang="pt-br">
-                {% load static %}
                 <head>
 
                     <meta charset="UTF-8">
